@@ -1,0 +1,708 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+<meta name="google-site-verification" content="LsUHtid5qWHFT_y8gdrZm27NbQXmK4BFa1OxaFpfQeI" />
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101226">
+  <title>ShareCemk – Free Online File Sharing by Code</title>
+
+<meta name="description" content="ShareCemk makes file sharing simple. Upload files, generate a 4-digit sharing code, and let anyone download them online. Fast, simple and free.">
+
+<meta name="keywords" content="ShareCemk, online file sharing, share files by code, send files online, free file transfer">
+
+<meta name="robots" content="index, follow">
+
+<meta name="author" content="ShareCemk">
+
+<meta property="og:title" content="ShareCemk – Share Files Easily">
+<meta property="og:description" content="Upload a file, get a 4-digit code and share it with anyone.">
+<meta property="og:type" content="website">
+
+<link rel="canonical" href="https://sharecemk.netlify.app/">
+
+<meta property="og:url" content="https://sharecemk.netlify.app/">
+
+<meta name="google-site-verification" content="YOUR_VERIFICATION_CODE">
+
+  <style>
+    :root {
+      --bg: #101226;
+      --panel: #191d35;
+      --line: #303653;
+      --muted: #a6acc5;
+      --purple: #a78bfa;
+      --blue: #69a7ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 30px 18px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background:
+        radial-gradient(ellipse at 15% 10%, #30245b55, transparent 35%),
+        radial-gradient(ellipse at 90% 90%, #244b7850, transparent 35%),
+        var(--bg);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 38px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 13px;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      font-size: 25px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #9b7bff, #5798f5);
+      box-shadow: 0 8px 28px #7767ee55;
+      transform: rotate(-5deg);
+    }
+
+    .logo {
+      font-size: clamp(34px, 7vw, 43px);
+      font-weight: 900;
+      letter-spacing: -2px;
+    }
+
+    .logo .cemk {
+      background: linear-gradient(100deg, #c0aaff, #75b7ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .tagline {
+      color: #c1c5da;
+      font-size: 15px;
+    }
+
+    .tagline strong {
+      color: #d8cbff;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: linear-gradient(160deg, #1d223d, #161a2f);
+      box-shadow: 0 18px 50px #0003;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 21px;
+      border-radius: 15px;
+      background: #8b73ee22;
+      color: #c8b7ff;
+      font-size: 25px;
+    }
+
+    h2 {
+      margin-bottom: 8px;
+      font-size: 21px;
+    }
+
+    .description {
+      min-height: 40px;
+      margin-bottom: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .file-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 55px;
+      padding: 12px;
+      margin-bottom: 14px;
+      border: 1px dashed #68638f;
+      border-radius: 13px;
+      color: #d2c5ff;
+      background: #9179ee10;
+      text-align: center;
+      font-size: 13px;
+      cursor: pointer;
+      overflow-wrap: anywhere;
+    }
+
+    .field-label {
+      display: block;
+      margin: 5px 0 8px;
+      color: #c2c6dc;
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    select,
+    input[type="text"] {
+      width: 100%;
+      min-height: 49px;
+      padding: 13px 14px;
+      margin-bottom: 14px;
+      border: 1px solid #3a4263;
+      border-radius: 12px;
+      outline: none;
+      color: white;
+      background: #11162a;
+      font-size: 14px;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    input[type="text"] {
+      text-align: center;
+      letter-spacing: 4px;
+      font-weight: 750;
+      text-transform: uppercase;
+    }
+
+    select:focus,
+    input[type="text"]:focus {
+      border-color: var(--purple);
+    }
+
+    button {
+      width: 100%;
+      min-height: 49px;
+      padding: 13px 16px;
+      border: 0;
+      border-radius: 12px;
+      color: white;
+      background: linear-gradient(100deg, #8668ef, #548fe9);
+      font-size: 14px;
+      font-weight: 750;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+
+    button:disabled {
+      opacity: .58;
+      cursor: wait;
+      transform: none;
+    }
+
+    .result {
+      display: none;
+      margin-top: 16px;
+      padding: 15px;
+      border: 1px solid #a78bfa30;
+      border-radius: 13px;
+      color: #e0ddff;
+      background: #202642;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    .result.error {
+      border-color: #ff8d9b55;
+      color: #ffc0c8;
+    }
+
+    .share-code {
+      margin: 8px 0 4px;
+      color: #d0c0ff;
+      font-size: 29px;
+      font-weight: 900;
+      letter-spacing: 7px;
+      text-align: center;
+    }
+
+    .expiry-note {
+      color: #c1c6dc;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .copy-btn,
+    .download-btn {
+      margin-top: 12px;
+      background: #39345f;
+    }
+
+    .footer {
+      margin-top: 25px;
+      color: #777f9f;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    @media(max-width: 650px) {
+      body {
+        padding: 27px 15px;
+      }
+
+      header {
+        margin-bottom: 28px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .card {
+        padding: 23px;
+      }
+
+      .description {
+        min-height: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <header>
+      <div class="brand">
+        <div class="brand-mark">S</div>
+        <div class="logo">
+          <span>Share</span><span class="cemk">CEMK</span>
+        </div>
+      </div>
+
+      <p class="tagline">
+        <strong>Share is caring.</strong>
+         Code it. Share it. And Relax.
+      </p>
+    </header>
+
+    <section class="cards">
+
+      <!-- SEND FILE -->
+      <div class="card">
+
+        <div class="card-icon">↑</div>
+
+        <h2>Send a File</h2>
+
+        <p class="description">
+          Choose a file, set its sharing time, and get a code to send.
+        </p>
+
+        <label class="file-label" for="fileInput" id="fileLabel">
+          ＋ Choose a file
+        </label>
+
+        <input type="file" id="fileInput">
+
+        <label class="field-label" for="expirySelect">
+          LINK EXPIRY
+        </label>
+
+        <select id="expirySelect">
+          <option value="1">1 minute</option>
+          <option value="5">5 minutes</option>
+          <option value="10">10 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="60">1 hour</option>
+          <option value="360">6 hours</option>
+          <option value="1440" selected>24 hours</option>
+          <option value="10080">7 days</option>
+        </select>
+
+        <button id="uploadBtn">Upload &amp; Get Code</button>
+
+        <div class="result" id="sendResult" role="status"></div>
+
+      </div>
+
+      <!-- RECEIVE FILE -->
+      <div class="card">
+
+        <div class="card-icon">↓</div>
+
+        <h2>Receive a File</h2>
+
+        <p class="description">
+          Enter the 4-digit code your friend shared with you.
+        </p>
+
+        <label class="field-label" for="codeInput">
+          SHARING CODE
+        </label>
+
+        <input
+          type="text"
+          id="codeInput"
+          placeholder="0000"
+          maxlength="4"
+          inputmode="numeric"
+          pattern="[0-9]{4}"
+          autocomplete="off"
+          spellcheck="false"
+        >
+
+        <button id="downloadBtn">Find File</button>
+
+        <div class="result" id="receiveResult" role="status"></div>
+
+      </div>
+
+    </section>
+
+    <p class="footer">ShareCemk · Simple file sharing</p>
+
+  </main>
+
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    // Supabase project settings
+   const SUPABASE_URL = "https://lrnncanyxmpvsjoeheuo.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_0vUZV1n11oWfifbv7ncMwQ_MOjVY6qM";
+    const BUCKET_NAME = "shareCEMK";
+
+    const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+    const fileInput = document.getElementById("fileInput");
+    const fileLabel = document.getElementById("fileLabel");
+    const uploadBtn = document.getElementById("uploadBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const sendResult = document.getElementById("sendResult");
+    const receiveResult = document.getElementById("receiveResult");
+    const codeInput = document.getElementById("codeInput");
+
+    const MAX_SIZE = 20 * 1024 * 1024;
+
+    function showResult(element, message, type = "") {
+      element.className = `result ${type}`.trim();
+      element.textContent = message;
+      element.style.display = "block";
+    }
+
+    // Generate a 4-digit code, including codes beginning with zero.
+    function generateCode() {
+      const values = new Uint32Array(1);
+      crypto.getRandomValues(values);
+      return String(values[0] % 10000).padStart(4, "0");
+    }
+
+    function formatExpiry(date) {
+      return date.toLocaleString([], {
+        day: "numeric",
+        month: "short",
+        hour: "numeric",
+        minute: "2-digit"
+      });
+    }
+
+    fileInput.addEventListener("change", () => {
+      const file = fileInput.files[0];
+      fileLabel.textContent = file
+        ? `Selected: ${file.name}`
+        : "＋ Choose a file";
+    });
+
+   uploadBtn.addEventListener("click", async () => {
+  const file = fileInput.files[0];
+
+  if (!file) {
+    showResult(sendResult, "Please choose a file first.", "error");
+    return;
+  }
+
+  if (file.size === 0 || file.size > MAX_SIZE) {
+    showResult(
+      sendResult,
+      file.size === 0
+        ? "This file is empty."
+        : "File size must be 20 MB or less.",
+      "error"
+    );
+    return;
+  }
+
+  uploadBtn.disabled = true;
+  uploadBtn.textContent = "Uploading...";
+  sendResult.style.display = "none";
+
+  let uploadedPath = null;
+
+  try {
+    const durationMinutes = Number(
+      document.getElementById("expirySelect").value
+    );
+
+    const expiresAt = new Date(
+      Date.now() + durationMinutes * 60 * 1000
+    );
+
+    const contentType = file.type || "application/octet-stream";
+
+    let reservedCode = null;
+    let saved = false;
+
+    // Try uploading with a unique code.
+    for (let attempt = 0; attempt < 30; attempt++) {
+      const candidate = generateCode();
+      const storagePath = `files/${candidate}`;
+
+      const { data: existing, error: lookupError } = await supabase
+        .rpc("get_share_by_code", { input_code: candidate });
+
+      if (lookupError) throw lookupError;
+
+      if (existing?.length) continue;
+
+      const { error: uploadError } = await supabase.storage
+        .from(BUCKET_NAME)
+        .upload(storagePath, file, {
+          contentType,
+          upsert: false
+        });
+
+      if (uploadError) {
+        if (uploadError.statusCode === "409") continue;
+        throw uploadError;
+      }
+
+      uploadedPath = storagePath;
+      reservedCode = candidate;
+
+      const { error: insertError } = await supabase
+        .from("shares")
+        .insert({
+          code: candidate,
+          file_name: file.name,
+          storage_path: storagePath,
+          file_size: file.size,
+          content_type: contentType,
+          expires_at: expiresAt.toISOString()
+        });
+
+      if (insertError) {
+        await supabase.storage
+          .from(BUCKET_NAME)
+          .remove([storagePath]);
+
+        uploadedPath = null;
+
+        if (insertError.code === "23505") continue;
+
+        throw insertError;
+      }
+
+      saved = true;
+      break;
+    }
+
+    if (!saved) {
+      throw new Error("Couldn't generate an available code. Please try again.");
+    }
+
+    sendResult.className = "result";
+    sendResult.style.display = "block";
+
+    sendResult.innerHTML = `
+      <div style="text-align:center">Your file is ready to share!</div>
+      <div class="share-code">${reservedCode}</div>
+      <div class="expiry-note">
+        Code expires ${formatExpiry(expiresAt)}
+      </div>
+      <button class="copy-btn" id="copyBtn">
+        Copy sharing code
+      </button>
+    `;
+
+    document.getElementById("copyBtn").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(reservedCode);
+        document.getElementById("copyBtn").textContent = "Copied!";
+      } catch {
+        alert("Your sharing code is: " + reservedCode);
+      }
+    });
+
+    fileInput.value = "";
+    fileLabel.textContent = "＋ Choose a file";
+
+  } catch (error) {
+    console.error(error);
+
+    showResult(
+      sendResult,
+      error.message || "Upload failed. Please try again.",
+      "error"
+    );
+
+    if (uploadedPath) {
+      await supabase.storage.from(BUCKET_NAME).remove([uploadedPath]);
+    }
+
+  } finally {
+    uploadBtn.disabled = false;
+    uploadBtn.textContent = "Upload & Get Code";
+  }
+});
+// Find file quickly; download only when requested.
+downloadBtn.addEventListener("click", async () => {
+  const code = codeInput.value.trim();
+
+  if (!/^\d{4}$/.test(code)) {
+    showResult(receiveResult, "Enter a valid 4-digit sharing code.", "error");
+    return;
+  }
+
+  downloadBtn.disabled = true;
+  downloadBtn.textContent = "Checking...";
+  receiveResult.style.display = "none";
+
+  try {
+    const { data: rows, error } = await supabase.rpc(
+      "get_share_by_code",
+      { input_code: code }
+    );
+
+    if (error) throw error;
+
+    const data = rows?.[0];
+
+    if (!data) {
+      throw new Error("No active file found. Check the sharing code.");
+    }
+
+    const expiryDate = new Date(data.expires_at);
+
+    if (expiryDate.getTime() <= Date.now()) {
+      throw new Error("This sharing code has expired.");
+    }
+
+    const safeName = String(data.file_name || "shared-file");
+
+    receiveResult.className = "result";
+    receiveResult.style.display = "block";
+
+    receiveResult.innerHTML = `
+      <div>File found!</div>
+      <p style="margin-top:8px" id="foundFileName"></p>
+      <p style="color:#a6acc5;font-size:12px">
+        ${(Number(data.file_size) / (1024 * 1024)).toFixed(2)} MB
+      </p>
+      <p class="expiry-note">
+        Available until ${formatExpiry(expiryDate)}
+      </p>
+      <button class="download-btn" id="actualDownload">
+        Download File
+      </button>
+    `;
+
+    document.getElementById("foundFileName").textContent = safeName;
+
+    document.getElementById("actualDownload").addEventListener("click", async (event) => {
+      const btn = event.currentTarget;
+
+      if (Date.now() >= expiryDate.getTime()) {
+        showResult(receiveResult, "This sharing code has expired.", "error");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Preparing download...";
+
+      try {
+        const { data: signed, error: signedError } =
+          await supabase.storage
+            .from(BUCKET_NAME)
+            .createSignedUrl(data.storage_path, 60, {
+              download: safeName
+            });
+
+        if (signedError) throw signedError;
+
+        window.location.href = signed.signedUrl;
+
+      } catch (error) {
+        showResult(
+          receiveResult,
+          error.message || "Download failed. Please try again.",
+          "error"
+        );
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Download File";
+      }
+    });
+
+  } catch (error) {
+    console.error(error);
+    showResult(
+      receiveResult,
+      error.message || "Couldn't retrieve this file.",
+      "error"
+    );
+  } finally {
+    downloadBtn.disabled = false;
+    downloadBtn.textContent = "Find File";
+  }
+});
+
+    // Accept digits only and preserve leading zeroes.
+    codeInput.addEventListener("input", event => {
+      event.target.value = event.target.value
+        .replace(/\D/g, "")
+        .slice(0, 4);
+    });
+  </script>
+
+</body>
+</html>
